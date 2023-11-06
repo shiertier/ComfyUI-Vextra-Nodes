@@ -1,17 +1,17 @@
 from transformers import GPT2Tokenizer, GPT2LMHeadModel, set_seed
 import os
 import random
+import folder_paths
 
-script_path = os.path.dirname(os.path.realpath(__file__))
-comfy_path = script_path.split('custom_nodes')[0]
+models_dir = folder_paths.models_dir
 
-if not os.path.exists(f'{comfy_path}custom_nodes/ComfyUI-Vextra-Nodes/binary/distilgpt2-stable-diffusion-v2'):
+if not os.path.exists(f'{models_dir}/huggningface/distilgpt2-stable-diffusion-v2'):
     print('Downloading model...')
-    os.system(f'git clone https://huggingface.co/FredZhang7/distilgpt2-stable-diffusion-v2 {comfy_path}custom_nodes/ComfyUI-Vextra-Nodes/binary/distilgpt2-stable-diffusion-v2')
+    os.system(f'git clone https://huggingface.co/FredZhang7/distilgpt2-stable-diffusion-v2 {models_dir}/huggningface/distilgpt2-stable-diffusion-v2')
 
-tokenizer = GPT2Tokenizer.from_pretrained('distilgpt2')
+tokenizer = GPT2Tokenizer.from_pretrained('distilgpt2', cache_dir='{models_dir}/huggningface')
 tokenizer.add_special_tokens({'pad_token': '[PAD]'})
-model = GPT2LMHeadModel.from_pretrained(f'{comfy_path}custom_nodes/ComfyUI-Vextra-Nodes/binary/distilgpt2-stable-diffusion-v2')
+model = GPT2LMHeadModel.from_pretrained('{models_dir}/huggningface/distilgpt2-stable-diffusion-v2')
 
 class GetPrompt():
     """
