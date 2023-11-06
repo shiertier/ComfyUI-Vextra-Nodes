@@ -8,7 +8,12 @@ except ModuleNotFoundError:
     subprocess.check_call([sys.executable, "-m", "pip", "install", "pygame"])
     from pygame import mixer
 
-mixer.init()
+try:
+    mixer.init()
+except pygame.error as e:
+    if 'ALSA: Couldn\'t open audio device: No such file or directory' in str(e):
+        print("Failed to open audio device, from ComfyUI\custom_nodes\ComfyUI-Vextra-Nodes\nodes\DT_Play_Sound_At_Execution.py")
+        sys.exit(1)
 
 def PlaySound(path, volume):
     mixer.music.load(path)
