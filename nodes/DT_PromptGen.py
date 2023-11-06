@@ -5,13 +5,13 @@ import folder_paths
 
 models_dir = folder_paths.models_dir
 
-if not os.path.exists(f'{models_dir}/huggingface/distilgpt2-stable-diffusion-v2'):
+if not os.path.exists(f'models_dir/huggingface/distilgpt2-stable-diffusion-v2'):
     print('Downloading model...')
-    os.system(f'git clone https://huggingface.co/FredZhang7/distilgpt2-stable-diffusion-v2 {models_dir}/huggingface/distilgpt2-stable-diffusion-v2')
+    os.system(f'git clone https://huggingface.co/FredZhang7/distilgpt2-stable-diffusion-v2 models_dir/huggingface/distilgpt2-stable-diffusion-v2')
 
-tokenizer = GPT2Tokenizer.from_pretrained('distilgpt2', cache_dir='{models_dir}/huggingface')
+tokenizer = GPT2Tokenizer.from_pretrained('distilgpt2', cache_dir='models_dir/huggingface')
 tokenizer.add_special_tokens({'pad_token': '[PAD]'})
-model = GPT2LMHeadModel.from_pretrained('{models_dir}/huggingface/distilgpt2-stable-diffusion-v2')
+model = GPT2LMHeadModel.from_pretrained('models_dir/huggingface/distilgpt2-stable-diffusion-v2')
 
 class GetPrompt():
     """
